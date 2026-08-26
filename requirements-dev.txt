@@ -1,0 +1,4 @@
+# Everything in the app, plus test tooling.
+-r requirements.txt
+pytest>=8.0
+ruff>=0.4

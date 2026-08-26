@@ -1,0 +1,13 @@
+# Runtime dependencies for the ReAct Research Agent.
+pydantic>=2.7
+
+# The Streamlit demo UI (web_app.py).
+streamlit>=1.30
+
+# Only needed for --real (a live model + real web search). Offline mode -- the
+# default everywhere -- needs none of these.
+litellm>=1.40
+python-dotenv>=1.0
+tavily-python>=0.3
+trafilatura>=1.6
+httpx>=0.27
