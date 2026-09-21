@@ -1,6 +1,6 @@
 # Publishing the ReAct Research Agent
 
-The star of this project is a **Streamlit web app** (`build_from_scratch/web_app.py`). You
+The star of this project is a **Streamlit web app** (`web_app.py`). You
 type a research question, and the page shows the cited answer, the numbered sources, the
 agent's self-critique, and — in an expander — the full reason → act → observe trace. Watching
 that loop is the whole lesson, so the demo is what you host.
@@ -15,11 +15,9 @@ So a public deploy is genuinely free, forever, even while it's live. You only to
 if *you* choose to turn on the `--real` path (a live model + real web search), and that's
 optional and at the very end.
 
-A note on layout before you start: this repo publishes the **whole project folder**
-(`12-react-research-agent/`), with `build_from_scratch/` as a subfolder. That way your GitHub
-page shows the learning material *and* the polished package. The Git commands below run from
-the **project root**; the app itself lives one level down in `build_from_scratch/`, which is
-why the deploy steps point at `build_from_scratch/web_app.py`.
+A note on layout before you start: the repo root is the polished package itself. The Git
+commands below run from the **project root**, and the app lives right there too:
+`web_app.py` sits next to `research_agent/`, so the deploy steps point at `web_app.py`.
 
 ---
 
@@ -66,13 +64,13 @@ One file must never leave your laptop, and the shipped `.gitignore` already bloc
   your account). The repo ships `.env.example` instead — variable names with blank values,
   safe to commit.
 
-Open `build_from_scratch/.gitignore` and confirm it lists at least `.env`, `__pycache__/`,
+Open `.gitignore` and confirm it lists at least `.env`, `__pycache__/`,
 `.venv/`, and `.pytest_cache/`. It does — but check, because this is the part that bites
 people. The rule: **source, config, docs, and the corpus go in; secrets and machine junk
 stay out.**
 
 One thing that *does* belong in the repo and surprises people: the corpus text files under
-`build_from_scratch/data/corpus/`. Those eight `.txt` files are the agent's entire "internet"
+`data/corpus/`. Those eight `.txt` files are the agent's entire "internet"
 when it runs offline. They're source data, not junk — the deployed app reads them at runtime,
 so they must be committed. `git add .` picks them up; just don't add them to `.gitignore`.
 
@@ -80,7 +78,7 @@ so they must be committed. `git add .` picks them up; just don't add them to `.g
 
 ## Step 2 — Make the local repo and commit
 
-From the **project root** (`12-react-research-agent/`, the folder with `build_from_scratch/`
+From the **project root** (the folder with `research_agent/`
 and `generate_data.py` in it):
 
 ```powershell
@@ -101,7 +99,7 @@ git ls-files | Select-String "\.env$"
 
 The second command should print **nothing** (or only `.env.example` if you widen the
 pattern), and **never** a bare `.env`. It should list the corpus files under
-`build_from_scratch/data/corpus/`. If a real `.env` shows up as tracked, you committed
+`data/corpus/`. If a real `.env` shows up as tracked, you committed
 something you shouldn't — fix it with the troubleshooting section at the bottom before you
 push.
 
@@ -151,12 +149,12 @@ git push
 ```
 
 Open the repo's **Actions** tab and watch it run: checkout, install Python 3.12, install
-`build_from_scratch/requirements-dev.txt`, run `pytest` from `build_from_scratch/`. Green
+`requirements-dev.txt`, run `pytest` from the repo root. Green
 means all 29 tests passed on GitHub's machine. If it's red, click the failed step and read
 the log bottom-up — the real error is in the last few lines.
 
 Once green, grab a status badge (Actions page → `...` → **Create status badge**) and paste
-the markdown at the top of `build_from_scratch/README.md`.
+the markdown at the top of `README.md`.
 
 ---
 
@@ -171,26 +169,25 @@ needed** to get a working public demo.
 1. Go to https://share.streamlit.io and sign in with GitHub.
 2. **New app** → **Deploy a public app from GitHub** → pick your `react-research-agent` repo
    and the `main` branch.
-3. **Main file path:** `build_from_scratch/web_app.py`. This is the part people get wrong —
-   the app file is *inside* `build_from_scratch/`, not at the repo root, so the path has to
-   include that folder. Getting it right is what lets `from research_agent.agent import
+3. **Main file path:** `web_app.py`. The app file sits at the repo root, right next to
+   `research_agent/`. That is what lets `from research_agent.agent import
    research` resolve, because Streamlit puts the app file's own folder on the import path.
 4. Advanced settings → set the Python version to 3.12 if offered. Streamlit reads
-   dependencies from `build_from_scratch/requirements.txt` automatically — it lives right next
+   dependencies from `requirements.txt` automatically - it lives right next
    to the app file, so you don't configure it.
 5. **Deploy.** First build takes a couple of minutes. You get a
    `https://YOURNAME-....streamlit.app` URL.
 
 If the build fails with a `ModuleNotFoundError: research_agent`, it's almost always the
-main-file path — it must be `build_from_scratch/web_app.py`, not `web_app.py`.
+main-file path - it must be `web_app.py` (at the repo root).
 
 ### Option B — Hugging Face Spaces (Streamlit SDK)
 
 1. Go to https://huggingface.co/spaces → **Create new Space**.
 2. Name it, choose **Streamlit** as the SDK, keep it **Public**, pick the free CPU tier.
-3. Spaces expects the app entry file at the **Space root**, and it doesn't understand a
-   `build_from_scratch/` subfolder the way Streamlit Cloud does. So in the Space's **Files**
-   tab, upload the *contents* of `build_from_scratch/` at the top level:
+3. Spaces expects the app entry file at the **Space root**, and the repo already has it
+   there. So in the Space's **Files**
+   tab, upload these at the top level:
    - `web_app.py`
    - the `research_agent/` folder (the whole package)
    - `requirements.txt`
@@ -256,7 +253,7 @@ why a demo like this is worth having.
    a nice thing to screenshot.
 
 Take a screenshot of the answer with its trace expanded and drop it in
-`build_from_scratch/README.md`. That image is what makes a recruiter click the link.
+`README.md`. That image is what makes a recruiter click the link.
 
 ---
 

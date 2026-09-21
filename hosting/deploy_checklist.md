@@ -3,7 +3,7 @@
 This is the project's "definition of done." Walk it top to bottom. Don't tick a box you
 haven't actually verified by running the command — "should work" isn't the same as "works."
 
-Commands assume you're inside `build_from_scratch/` unless noted.
+Commands assume you're at the repo root unless noted.
 
 ## Runs locally
 
@@ -23,13 +23,13 @@ Commands assume you're inside `build_from_scratch/` unless noted.
 
 ## Tests pass
 
-- [ ] `pytest` from `build_from_scratch/` is all green (29 tests).
+- [ ] `pytest` from the repo root is all green (29 tests).
 - [ ] You ran it in the fresh venv, not just your everyday one, so you know the deps are complete.
 - [ ] Tests are offline — they ran with NO `GEMINI_API_KEY`, NO `TAVILY_API_KEY`, and NO network.
 
 ## README is recruiter-ready
 
-- [ ] `build_from_scratch/README.md` exists and covers: the problem, skills demonstrated,
+- [ ] `README.md` exists and covers: the problem, skills demonstrated,
       tech stack, how it works, how to run it, and what you learned.
 - [ ] A real sample-output block is pasted in (not paraphrased) — the `--steps` trace plus the
       final cited answer and its Sources list.
@@ -79,8 +79,8 @@ Commands assume you're inside `build_from_scratch/` unless noted.
 
 - [ ] The **Streamlit demo** is live on Streamlit Community Cloud or Hugging Face Spaces, and
       the public URL opens.
-- [ ] The **main-file path** is `build_from_scratch/web_app.py` (Streamlit Cloud) — or the
-      `build_from_scratch/` contents sit at the Space root (Hugging Face).
+- [ ] The **main-file path** is `web_app.py` (Streamlit Cloud) - or the
+      repo files sit at the Space root (Hugging Face).
 - [ ] You asked the demo question on the live site and confirmed: the cited answer renders, the
       three sources render, and the reasoning-trace expander shows five steps.
 - [ ] Deploy URL added to the README so a recruiter can click it.
